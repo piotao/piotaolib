@@ -12,15 +12,12 @@ INCLUDE = -I/usr/include/SDL -I../src -I../SDL
 LDFLAGS = -L../SDL -lm -lSDL -lSDL_image
 CCFLAGS = -O2 -g -Wall -pedantic ${INCLUDE}
 
-all: calcVariance getScanLine imgscanline2vectors
+all: calcVariance getScanLine
 
 calcVariance: calcVariance.c
 	${CC} ${CCFLAGS} $< ../src/*.o -o $@ ${LDFLAGS}
 
 getScanLine: getScanLine.c
-	${CC} ${CCFLAGS} $< ../src/*.o -o $@ ${LDFLAGS}
-
-imgscanline2vectors: imgscanline2vectors.c
 	${CC} ${CCFLAGS} $< ../src/*.o -o $@ ${LDFLAGS}
 
 %.d: %.c
