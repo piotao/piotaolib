@@ -1,6 +1,7 @@
 # piotao custom files
 SDL
 attic
+*.d
 
 # Object files
 *.o
