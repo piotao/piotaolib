@@ -1,0 +1,54 @@
+
+# zmienne
+GCC = gcc
+OPT = -Wall -pedantic -ansi
+
+# globalna kompilacja
+all: data.o	files.o listd.o numerics.o pixels.o testing.o vector.o \
+	defs.o listc.o matrix.o options.o stack.o timers.o
+
+clean:
+	rm *.o
+
+# metody szczegolowe dla modulow
+
+defs.o: defs.c defs.h
+	${GCC} -c defs.c -o defs.o ${OPT}
+
+data.o: data.c data.h defs.h listc.h
+	${GCC} -c data.c -o data.o ${OPT}
+
+files.o: files.c files.h
+	${GCC} -c files.c -o files.o ${OPT}
+
+listc.o: listc.c defs.h listc.h
+	${GCC} -c listc.c -o listc.o ${OPT}
+
+listd.o: listd.c listd.h defs.h
+	${GCC} -c listd.c -o listd.o ${OPT}
+
+matrix.o: matrix.c defs.h matrix.h vector.h data.h
+	${GCC} -c matrix.c -o matrix.o ${OPT}
+
+numerics.o: numerics.c defs.h data.h listd.h matrix.h vector.h numerics.h
+	${GCC} -c numerics.c -o numerics.o ${OPT}
+
+options.o: options.c options.h
+	${GCC} -c options.c -o options.o ${OPT}
+
+pixels.o: pixels.c data.h defs.h listd.h pixels.h vector.h matrix.h
+	${GCC} -c pixels.c -o pixels.o -I../SDL ${OPT}
+
+stack.o: stack.c defs.h data.h stack.h
+	${GCC} -c stack.c -o stack.o ${OPT}
+
+testing.o: testing.c testing.h defs.h
+	${GCC} -c testing.c -o testing.o ${OPT}
+
+timers.o: timers.c timers.h
+	${GCC} -c timers.c -o timers.o ${OPT}
+
+vector.o: vector.c defs.h data.h listc.h vector.h
+	${GCC} -c vector.c -o vector.o ${OPT}
+
+

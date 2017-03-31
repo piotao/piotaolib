@@ -1,0 +1,17 @@
+
+all: getScanLine calcVariance
+
+
+getScanLine: getScanLine.c
+	@echo GETSCANLINE
+	gcc -c getScanLine.c -o getScanLine.o -I../src -I../SDL -Wall -pedantic
+	gcc -L../SDL -o getscanline getScanLine.o ../src/pixels.o ../src/listd.o ../src/defs.o ../src/vector.o ../src/data.o ../src/matrix.o ../src/listc.o -lSDL -lSDL_image
+	echo
+
+
+calcVariance: calcVariance.c
+	@echo CALCVARIANCE
+	gcc -c calcVariance.c -o calcVariance.o -I../src -I../SDL -Wall -pedantic
+	gcc -L../SDL -o calcvariance calcVariance.o ../src/options.o ../src/files.o ../src/matrix.o ../src/data.o ../src/listd.c ../src/vector.o ../src/listc.o ../src/pixels.o ../src/numerics.o -lSDL -lSDL_image -lm
+
+
