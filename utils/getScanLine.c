@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <getopt.h>
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -39,10 +40,32 @@ void scanandwrite(FILE *F,SDL_Surface *I,const char dir,int N,char ch,const char
 }
 
 int main(int argc, char** argv){
-	int i=1,rgb=-1;
+	int rgb=-1;
+	char c;
 	SDL_Surface *image;
 	FILE *fout;
 
+	/* according to https://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html#Example-of-Getopt */
+	while( (c = getopt(argc,argv,"x:y:rgbo:i:")) != -1 )
+		switch(c){
+			case 'r': R = 1; break;
+			case 'g': G = 1; break;
+			case 'b': B = 1; break;
+			case 'x': X = atoi(optarg); break;
+			case 'y': Y = atoi(optarg); break;
+			case 'o': OUT = optarg; break;
+			case 'i': INP = optarg; break;
+			case '?':
+						 if(optopt == 'x') fprintf(stderr,"Option -x requires and argument: number of vertical line of pixels\n");
+				else if(optopt == 'y') fprintf(stderr,"Option -y requires and argument: number of horizontal line of pixels\n");
+						 else if(optopt == 'o') fprintf(stderr,"Option -o requires an output file name\n");
+						 else if(optopt == 'i') fprintf(stderr,"Option -i requires an input file name\n");
+						 else if(isprint(optopt)) fprintf(stderr,"Unknown option -%c\n",optopt);
+						 else fprintf(stderr,"Unknown option character '%c'\n",optopt  );
+			return 1;
+			default: abort();
+		}
+	/*
 	while(i<argc){
 		if(!strcmp("-x",argv[i])){ X = atoi(argv[++i]); }
 		if(!strcmp("-y",argv[i])){ Y = atoi(argv[++i]); }
@@ -53,6 +76,7 @@ int main(int argc, char** argv){
 		if(!strcmp("-i",argv[i])){ INP = argv[++i]; }
 		i++;
 	}
+	*/
 	image = IMG_Load(INP);
 	if(image){
 		if(!strcmp("-",OUT)){ fout = stdout; }

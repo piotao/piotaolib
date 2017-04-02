@@ -15,6 +15,16 @@
  * 		newItem('pi', NULL, pDouble,newDouble(3.14))))
  * 	)
  * );
+ * or, maybe better (break breaks all options processing)
+ * while(1){
+ *		if(getopt("-x",i)){ .... }
+ *		else if(getopt("-y",i)){ ... }
+ *		else if(getopt("-x",i)){ ... }
+ *		else if(getopt("-g",i)){ ... }
+ *		else{
+ *			// default option
+ *		}
+ * }
  */
 
 #include <stdlib.h>

@@ -121,6 +121,19 @@ pVector newFromVectors(pVector P,pVector Q){
 	return V;
 }
 
+/* swaps elements in the whole vector: namely reverse it! */
+void swapElementV(pVector V, int a,int b,int c,int d){
+	pData idx1,idx2;
+	Data tmp;
+	if(V){
+		idx1 = V->T + a*V->size + b;
+		idx2 = V->T + c*V->size + d;
+		tmp = *idx1;
+		*idx1 = *idx2;
+		*idx2 = tmp;
+	}
+}
+
 /* delete vector and remove its data from memory */
 void freeVector(pVector V){
 	if(V){
@@ -176,5 +189,4 @@ void printfVector(const char* format,pVector V){
 		printf("NULL\n");
 	}
 }
-
 

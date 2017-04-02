@@ -31,6 +31,7 @@ pVector newCopyVector(pVector V);
 pVector newCopyVectorFromTo(pVector V,int start,int end);
 pVector newFromData(pData T,int SIZE);
 pVector newFromVectors(pVector P,pVector Q);
+void swapElementV(pVector V, int a,int b,int c,int d);
 void freeVector(pVector V);
 void freeNoVector(pVector V);
 void printVector(pVector V);
