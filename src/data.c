@@ -14,6 +14,7 @@
  * 20170306,pio: small repairs in calloc
  * 20170327,pio: refactoring and consolidation of piotaolib code
  * 20170331,pio: added few comments
+ * 20170409,pio: added copyData function as a memcpy wrapper
  */
 
 #include <stdlib.h>		/* for malloc */
@@ -29,6 +30,16 @@ pData newData(int n){
 	pData p = (pData) calloc(n,sizeof(Data));
 	memset(p,0,n);
 	return p;
+}
+
+/* copies data from flat array */
+pData fromData(pData T,int n){
+	pData N = NULL;
+	if(T && n>0){
+		N = (pData) calloc(n,sizeof(Data));
+		memcpy(N,T,n);
+	}
+	return N;
 }
 
 /* define a vector of data by giving just some values, like .1, 2.5, -23.7, etc. The whole vector is created and initialized using them. */

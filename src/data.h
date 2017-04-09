@@ -12,9 +12,10 @@
 #define __PIOTAO_DATA__
 
 #include "defs.h"
-
+ 
 pData newData(int n);
 pData defData(Data d,...);
+pData fromData(pData T,int n);
 void freeData(pData T);
 void printData(pData T,int n);
 
