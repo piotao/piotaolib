@@ -37,11 +37,13 @@ pListD normalizeList(pListD L);
 /* data search and lookup */
 inline int max(int a,int b){ return (a>b)?a:b; }
 inline int min(int a,int b){ return (a<b)?a:b; }
-inline int torange(int low,int n,int top){ return n<low? n : n<top ? n : top; }
+inline int clamp(int low,int n,int top){ return n<low? n : n<top ? n : top; }
 Data maxData(pData T,int SIZE);
 Data minData(pData T,int SIZE);
 Data medianData(pData T,int SIZE);
 Data findListMax(pListD L);
+Data maxVector(pVector V);
+Data minVector(pVector V);
 
 
 /* variance related functions */

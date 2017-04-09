@@ -161,6 +161,113 @@ pData normalizeDataFromTo(pData T,int start,int end,Data max){
 	return T;
 }
 
+/* finds a maximum data value in a flat vector of data, linear search */
+Data maxData(pData T,int SIZE){
+	int  i;
+	Data mx = NOTN;
+	if(T){
+		mx = T[0];
+		for(i=1;i<SIZE;i++)
+			if(mx < T[i]) mx = T[i];
+	}
+	return mx;
+}
+
+/* finds a minimum data value from flat vector, linear search */
+Data minData(pData T,int SIZE){
+	int  i;
+	Data mn = NOTN;
+	if(T){
+		mn = T[0];
+		for(i=1;i<SIZE;i++)
+			if(mn < T[i]) mn = T[i];
+	}
+	return mn;
+}
+
+/* finds maximum value from a vector */
+Data maxVector(pVector V){
+	if(V)
+		return maxData(V->T,V->size);
+	else
+		return NOTN;
+}
+
+/* finds minimum value from a vector */
+Data minVector(pVector V){
+	return V ? minData(V->T,V->size) : NOTN;
+}
+
+/* calculates median point, which is half of min and max data */
+/* some interesting solutions can be found here:
+ * http://ndevilla.free.fr/median/median/
+ * and there are some algorithms presented in C to use! */
+
+/*
+ *  This Quickselect routine is based on the algorithm described in
+ *  "Numerical recipes in C", Second Edition,
+ *  Cambridge University Press, 1992, Section 8.5, ISBN 0-521-43108-5
+ *  This code by Nicolas Devillard - 1998. Public domain.
+ */
+
+#define ELEM_SWAP(a,b) { register Data t=(a);(a)=(b);(b)=t; }
+
+Data quick_select(Data arr[], int n){
+	int low, high ;
+	int median;
+	int middle, ll, hh;
+
+	low = 0 ; high = n-1 ; median = (low + high) / 2;
+	for (;;) {
+		if (high <= low) /* One element only */
+			return arr[median];
+
+		if (high == low + 1) {  /* Two elements only */
+			if (arr[low] > arr[high]) ELEM_SWAP(arr[low], arr[high]);
+			return arr[median];
+		}
+
+		/* Find median of low, middle and high items; swap into position low */
+		middle = (low + high) / 2;
+		if (arr[middle] > arr[high]) ELEM_SWAP(arr[middle], arr[high]);
+		if (arr[low]    > arr[high]) ELEM_SWAP(arr[low]   , arr[high]);
+		if (arr[middle] > arr[low] ) ELEM_SWAP(arr[middle], arr[low] );
+
+		/* Swap low item (now in position middle) into position (low+1) */
+		ELEM_SWAP(arr[middle], arr[low+1]) ;
+
+		/* Nibble from each end towards middle, swapping items when stuck */
+		ll = low + 1;
+		hh = high;
+		for (;;) {
+			do ll++; while (arr[low] > arr[ll]) ;
+			do hh--; while (arr[hh]  > arr[low]) ;
+			if (hh < ll) break;
+			ELEM_SWAP(arr[ll], arr[hh]) ;
+		}
+
+		/* Swap middle item (in position low) back into correct position */
+		ELEM_SWAP(arr[low], arr[hh]) ;
+
+		/* Re-set active partition */
+		if (hh <= median) low = ll;
+		if (hh >= median) high = hh - 1;
+	}
+}
+
+#undef ELEM_SWAP
+
+Data medianData(pData T,int SIZE){
+	Data med = NOTN;
+	if(T){
+		pData N = fromData(T,SIZE);
+		med = quick_select(N,SIZE);
+		freeData(N);
+	}
+	return med;
+}
+
+
 /* finds a maximum data in a double-linked list */
 Data findListMax(pListD L){
 	Data max = ZERO;
