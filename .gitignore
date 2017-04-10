@@ -12,6 +12,9 @@ tests/testPixels
 tests/testStack
 tests/testVariance
 tests/testVector
+utils/calcVariance
+utils/getScanLine
+
 
 # Object files
 *.o
