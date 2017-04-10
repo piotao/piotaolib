@@ -2,6 +2,16 @@
 SDL
 attic
 *.d
+tests/testAverage
+tests/testData
+tests/testDlist
+tests/testMatrix
+tests/testNumerics
+tests/testOptions
+tests/testPixels
+tests/testStack
+tests/testVariance
+tests/testVector
 
 # Object files
 *.o
