@@ -390,22 +390,6 @@ Data varianceSubMatrix(pMatrix M,int x,int y,int dx,int dy){
 				setElement(N,i,j, getElement(M,nx,ny));
 			}
 		}
-		/*
-		for(i=x-dx;x<=x+dx;i++)
-			for(j=y-dy;j<=y+dy;j++){
-				nx = x-dx+i
-				for(fi=0;fi<N->W;fi++)
-					for(fj=0;fj<N->H;fj++){
-						nx = (i - N->W/2 + fi);
-						ny = (j - N->H/2 + fj);
-						nx = (nx<0)? -nx-1 : (nx>N->W-1)? M->W-(nx-M->W)-1 : nx;
-						ny = (ny<0)? -ny-1 : (ny>N->H-1)? M->H-(ny-M->H)-1 : ny;
-						nx = nx % M->W;
-						ny = ny % M->H;
-						printf("copy from M[%i,%i] to N[%i,%i]\n",nx,ny,fi,fj);
-						setElement(N,fi,fj, getElement(M,nx,ny));
-					}
-			*/
 		if(N){
 			var = varianceMatrix(N);
 			freeMatrix(N);
@@ -529,6 +513,7 @@ void mulMatrixBy(pMatrix A,Data scalar){
 		for(i=0;i<size;i++) A->T[i] *= scalar;
 	}
 }
+
 /* flips matrix horizontally and returns the new matrix */
 void flipMatrixH(pMatrix A){
 	int i,j;
@@ -607,4 +592,97 @@ pMatrix makeGaussian(int radius,Data sigma){
 	}
 	return G;
 }
+
+
+/* simple algebra functions for flat data vectors */
+void addData(pData T,int SIZE,Data val){
+	if(T){
+		for(int i=0;i<SIZE;i++)
+			T[i] += val;
+	}
+}
+
+/* makes the whole vector just an absolute values of vector */
+void absData(pData T,int SIZE){
+	if(T){
+		for(int i=0;i<SIZE;i++)
+			T[i] = T[i] < 0 ? -T[i] : T[i];
+	}
+}
+
+/* calc a total sum of the vector */
+Data reduceSumData(pData T,int SIZE){
+	Data sum = ZERO;
+	if(T)
+		for(int i=0;i<SIZE;i++)
+			sum += T[i];
+	return sum;
+}
+
+Data reduceMulData(pData T,int SIZE){
+	Data mul = (Data) 1.0;
+	if(T)
+		for(int i=0; i<SIZE; mul *= T[i++] );
+	return mul;
+}
+
+/* calculate sum of SQUARES of data in the vector: sum(T[i]²) */
+Data reduceSQsumData(pData T,int SIZE){
+	Data sqsum = ZERO;
+	if(T)
+		for(int i=0; i<SIZE; sqsum += pow(T[i++],2.0) );
+	return sqsum;
+}
+
+/* calculate SAXPY for the vector: saxpy = t[i]*a + b    */
+void saxpy(pData T,int SIZE,Data a,Data b){
+	if(T){
+		for(int i=0;i<SIZE;i++)
+			T[i] = T[i]*a +  b;
+	}
+}
+
+/* calculate hadamard multiplication of vectors: v[i] = h[i] * g[i], returned as a new data */
+pData mulDataHadamard(pData T1,pData T2,int SIZE){
+	pData N = newData(SIZE);
+	if(T1 != NULL  &&  T2!=NULL){
+		for(int i=0;i<SIZE;i++)
+			N[i] = T1[i] * T2[i];
+	}
+	return N;
+}
+
+
+/* calculate pitagoreian length using c² = a²+b²+.... formula for a whole vector */
+Data pythagoreanLengthData(pData T,int SIZE){
+	return (T != NULL) ? sqrt( reduceSQsumData(T,SIZE) ) : NOTN;
+}
+
+/* calculate sum of two vectors: v[i] = h[i] + g[i], returned as a new data */
+pData addDataData(pData T1,pData T2,int SIZE){
+	pData N = newData(SIZE);
+	if(T1 != NULL  &&  T2!=NULL){
+		for(int i=0;i<SIZE;i++)
+			N[i] = T1[i] + T2[i];
+	}
+	return N;
+}
+
+/* calculate substraction of two vectors: v[i] = h[i] - g[i], returned as a new data */
+pData subDataData(pData T1,pData T2,int SIZE){
+	pData N = newData(SIZE);
+	if(T1 != NULL  &&  T2!=NULL)
+		for(int i=0;i<SIZE;i++) N[i] = T1[i] - T2[i];
+	return N;
+}
+
+
+
+
+
+
+
+
+
+
 

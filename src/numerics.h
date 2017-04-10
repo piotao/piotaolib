@@ -33,7 +33,6 @@ pData normalizeDataFromTo(pData T,int start,int end,Data max);
 pListD normalizeList(pListD L);
 //TODO void normalizeMatrix(pMatrix M);
 
-
 /* data search and lookup */
 inline int max(int a,int b){ return (a>b)?a:b; }
 inline int min(int a,int b){ return (a<b)?a:b; }
@@ -44,7 +43,6 @@ Data medianData(pData T,int SIZE);
 Data findListMax(pListD L);
 Data maxVector(pVector V);
 Data minVector(pVector V);
-
 
 /* variance related functions */
 Data varianceDataFromTo(pData T,int start,int end);
@@ -65,22 +63,25 @@ pVector reverseVector(pVector V);
 void randomizeMatrix(pMatrix M);
 void drand48Matrix(pMatrix M);
 
-/* make transpose matrix A to new matrix which is created and returned */
+/* misc matrix computations functions */
 pMatrix transposeMatrix(pMatrix A);
-/* multiplies matrix by a scalar value */
 void mulMatrixBy(pMatrix A,Data scalar);
-/* flips matrix horizontally and returns the new matrix */
 void flipMatrixH(pMatrix A);
-/* flips matrix vertically and returns the new matrix */
 void flipMatrixV(pMatrix A);
-/* sum the whole matrix */
 Data reduceMatrix(pMatrix A);
-/* prepare gaussian distribution for a flitering, matrix is (radius*2+1)² */
 pMatrix makeGaussian(int radius,Data sigma);
-/* makes filtering with the usage of matrix F over matrix M */
 pMatrix filterMatrix(pMatrix F, pMatrix M);
 
-
+/* simple algebra functions on flat vectors */
+void addData(pData T,int SIZE,Data val);
+pData addDataData(pData T1,pData T2,int SIZE);
+pData subDataData(pData T1,pData T2,int SIZE);
+void absData(pData T,int SIZE);
+Data reduceSumData(pData T,int SIZE);
+Data reduceMulData(pData T,int SIZE);
+Data reduceSQsumData(pData T,int SIZE);
+void saxpy(pData T,int SIZE,Data a,Data b);
+pData mulDataHadamard(pData T1,pData T2,int SIZE);
 
 
 
