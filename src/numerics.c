@@ -374,23 +374,25 @@ Data varianceSubMatrix(pMatrix M,int x,int y,int dx,int dy){
 	Data var = NOTN;
 	// it is like filter but with constant area, so it is like in internal loop
 	// idea: copy and make the matrix to calc from the original one
-	printf("varianceSubMatrix:M,%i,%i, %i,%i\n",x,y,dx,dy);
+	//printf("varianceSubMatrix:M,%i,%i, %i,%i\n",x,y,dx,dy);
 	if(M){
 		pMatrix N = newMatrix(dx*2+1,dy*2+1);
-		printf("matrixN:\n");printMatrix(N);
-		for(i=0;i<dx*2+1;i++){     // iteration over sub <--x-->
-			for(j=0;j<dy*2+1;j++){   // iteration over sub y
-				nx = x - dx + i;
-				if(nx<0) nx = -nx - 1;
-				if(nx>=M->W) nx = 2*M->W - nx;
-				ny = y - dy + j;
-				if(ny<0) ny = -ny - 1;
-				if(ny>=M->H) ny = 2*M->H - ny;
-				printf("N[%i,%i] = M[%i,%i], elem:%f\n",i,j,nx,ny,getElement(M,nx,ny));
-				setElement(N,i,j, getElement(M,nx,ny));
-			}
-		}
+		//printf("matrixN:\n");printMatrix(N);
 		if(N){
+			for(i=0;i<dx*2+1;i++){     // iteration over sub <--x-->
+				for(j=0;j<dy*2+1;j++){   // iteration over sub y
+					nx = x - dx + i;
+					if(nx<0) nx = -nx - 1;
+					if(nx>=M->W) nx = 2*M->W - nx - 1;
+					ny = y - dy + j;
+					if(ny<0) ny = -ny - 1;
+					if(ny>=M->H) ny = 2*M->H - ny - 1;
+					//printf("N[%i,%i]=M[%i,%i](%f) ",i,j,nx,ny,getElement(M,nx,ny));
+					setElement(N,i,j, getElement(M,nx,ny));
+				}
+				//printf("\n");
+			}
+			//printf("matrixN:\n");printMatrix(N);
 			var = varianceMatrix(N);
 			freeMatrix(N);
 		}

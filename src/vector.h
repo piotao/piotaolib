@@ -37,7 +37,7 @@ void freeNoVector(pVector V);
 void printVector(pVector V);
 void printVectorN(pVector V,int count);
 void printlnVectorN(pVector V,int count);
-void printfVector(const char* format,pVector V);
+void printVectorFmt(const char* format,pVector V);
 
 #endif /* VECTOR_H_ */
 

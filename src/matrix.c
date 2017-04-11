@@ -32,6 +32,19 @@ pMatrix newNoMatrix(int w, int h){
 	return T;
 }
 
+/* create matrix from vector, missing data is filled with zeros */
+pMatrix fromVector(int w, int h, pVector V){
+	pMatrix T = newMatrix(w,h);
+	if(V){
+		int v = 0;
+		for(int i=0;i<T->W;i++)
+			for(int j=0;j<T->H;j++){
+				setElement(T,i,j, v<V->size ? V->T[v++] : ZERO);
+			}
+	}
+	return T;
+}
+
 /* deallocates matrix memory, this destroys it */
 void freeMatrix(pMatrix M) {
 	if (M) {

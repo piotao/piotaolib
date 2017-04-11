@@ -150,8 +150,11 @@ void freeNoVector(pVector V){
 /* prints the whole vector */
 void printVector(pVector V){
 	int i;
-	if(V) for(i=0; i<V->size; i++) printf("%f ",V->T[i]);
-	else printf("NULL");
+	if(V)
+		for(i=0; i<V->size; i++)
+			printf("%f ",V->T[i]);
+	else
+		printf("NULL");
 }
 
 /* just prints first count elements from vector */
@@ -180,7 +183,7 @@ void printlnVectorN(pVector V,int count){
 }
 
 /* prints all data using specified formatting */
-void printfVector(const char* format,pVector V){
+void printVectorFmt(const char* format,pVector V){
 	int i = 0;
 	if(V){
 		for(i=0;i<V->size;i++) printf(format,V->T[i]);

@@ -36,6 +36,7 @@ typedef Matrix* pMatrix;
 
 pMatrix newMatrix(int w, int h);
 pMatrix newNoMatrix(int w, int h);
+pMatrix fromVector(int w,int h,pVector V);
 pMatrix fromMatrix(pMatrix A);
 pMatrix fromSubMatrix(pMatrix A,int x,int y,int w,int h);
 void freeMatrix(pMatrix M);
